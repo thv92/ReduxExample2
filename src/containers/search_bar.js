@@ -11,6 +11,7 @@ class SearchBar extends Component {
 
     //Allows this to use the correct context
     this.onInputChange = this.onInputChange.bind(this);
+    this.onFormSubmit = this.onFormSubmit.bind(this);
   }
 
   onInputChange(event) {
