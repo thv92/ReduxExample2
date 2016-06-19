@@ -1,6 +1,9 @@
 import React, { Component  } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchWeather } from '../actions/index';
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
   constructor(props) {
     super(props);
 
@@ -15,10 +18,12 @@ export default class SearchBar extends Component {
     this.setState({term: event.target.value});
   }
 
+  //Fire action creator when user submits
   onFormSubmit(event) {
     event.preventDefault();
-    
 
+    this.props.fetchWeather(this.state.term);
+    this.setState({ term: ''}) //clearing state after user submits
   }
 
   // Want to avoid submit/enter to send to another HTML page since single page application
@@ -36,6 +41,12 @@ export default class SearchBar extends Component {
       </form>
     );
   }
-
-
 }
+
+//Now can access this.props.fetchWeather
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather }, dispatch);
+}
+
+// Normally state is first argument | There's no state
+export default connect(null, mapDispatchToProps)(SearchBar);
